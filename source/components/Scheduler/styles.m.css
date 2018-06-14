@@ -135,8 +135,8 @@
             }
 
             & ::-webkit-scrollbar-corner {
-                  background-color: var(--paletteColor4);
-              }
+                background-color: var(--paletteColor4);
+            }
 
             & ul {
                 min-height: 370px;

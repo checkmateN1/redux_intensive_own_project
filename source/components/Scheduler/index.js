@@ -1,8 +1,8 @@
 // Core
 import React, { Component } from "react";
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import FlipMove from 'react-flip-move';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import FlipMove from "react-flip-move";
 
 //Instruments
 import Styles from "./styles.m.css";
@@ -24,7 +24,7 @@ const mapState = (state) => {
     };
 };
 
-const mapDispatch  = (dispatch) => {
+const mapDispatch = (dispatch) => {
     return {
         actions: bindActionCreators(
             {
@@ -36,7 +36,7 @@ const mapDispatch  = (dispatch) => {
                 isAllCompleted:      stateActions.isAllCompleted,
                 checkIsAllCompleted: stateActions.checkIsAllCompleted,
             },
-            dispatch,
+            dispatch
         ),
     };
 };
@@ -60,7 +60,7 @@ export default class Scheduler extends Component {
     _changeNewTaskName = (event) => {
         const value = event.target.value;
 
-        if (value.split('').length > 50) {
+        if (value.split("").length > 50) {
             return false;
         }
 
@@ -69,16 +69,16 @@ export default class Scheduler extends Component {
 
     _createToDo = (event) => {
         event.preventDefault();
-        const newTaskName = this.props.state.get('newTaskName');
+        const newTaskName = this.props.state.get("newTaskName");
 
         if (!newTaskName) {
-            alert("Введите название новой задачи!");
+            console.log("Введите название новой задачи!");
 
             return;
         }
 
         this.props.actions.createTaskAsync(newTaskName);
-        this.props.actions.newTaskName(''); //reset input value
+        this.props.actions.newTaskName(""); //reset input value
 
         return false;
     };
@@ -86,19 +86,24 @@ export default class Scheduler extends Component {
     _filterTasks = (tasks) => {
         return tasks.map((toDo) => (
             <Task
-                isCompleted = { toDo.get('completed') }
-                isFavorite = { toDo.get('favorite') }
-                key = { toDo.get('id') }
-                taskID = { toDo.get('id') }
-                taskName = { toDo.get('message') }
+                isCompleted = { toDo.get("completed") }
+                isFavorite = { toDo.get("favorite") }
+                key = { toDo.get("id") }
+                taskID = { toDo.get("id") }
+                taskName = { toDo.get("message") }
             />
         ));
     };
 
     _makeAllTasksCompleted = () => {
         this.props.tasks.forEach((task) => {
-            if (task.get('completed') === false) {
-                this.props.actions.updateTaskAsync(task.get('id'), task.get('message'), true, task.get('favorite'));
+            if (task.get("completed") === false) {
+                this.props.actions.updateTaskAsync(
+                    task.get("id"),
+                    task.get("message"),
+                    true,
+                    task.get("favorite")
+                );
             }
         });
 
@@ -106,10 +111,17 @@ export default class Scheduler extends Component {
     };
 
     _isSearchTaskNameEqual = (task) => {
-        const searchTaskName = this.props.state.get('searchTaskName');
+        const searchTaskName = this.props.state.get("searchTaskName");
 
         if (searchTaskName) {
-            return searchTaskName.split('').join() === task.get('message').split('').slice(0, searchTaskName.split('').length).join();
+            return (
+                searchTaskName.split("").join() ===
+                task
+                    .get("message")
+                    .split("")
+                    .slice(0, searchTaskName.split("").length)
+                    .join()
+            );
         }
 
         return true;
@@ -118,25 +130,37 @@ export default class Scheduler extends Component {
     render () {
         const { tasks, state } = this.props;
 
-        const favoritesTasks = tasks.filter((task) => task.get('favorite') === true && task.get('completed') === false && this._isSearchTaskNameEqual(task));
+        const favoritesTasks = tasks.filter(
+            (task) =>
+                task.get("favorite") === true &&
+                task.get("completed") === false &&
+                this._isSearchTaskNameEqual(task)
+        );
         const filteredFavoriteTasks = this._filterTasks(favoritesTasks);
 
-        const usualTasks = tasks.filter((task) => task.get('favorite') !== true && task.get('completed') === false && this._isSearchTaskNameEqual(task));
+        const usualTasks = tasks.filter(
+            (task) =>
+                task.get("favorite") !== true &&
+                task.get("completed") === false &&
+                this._isSearchTaskNameEqual(task)
+        );
         const filteredUsualTasks = this._filterTasks(usualTasks);
 
-        const completedTasks = tasks.filter((task) => task.get('completed') === true && this._isSearchTaskNameEqual(task));
+        const completedTasks = tasks.filter(
+            (task) =>
+                task.get("completed") === true &&
+                this._isSearchTaskNameEqual(task)
+        );
         const filteredCompletedTasks = this._filterTasks(completedTasks);
 
         return (
             <section className = { Styles.scheduler }>
                 <main>
                     <header>
-                        <h1>
-                            Планировщик задач
-                        </h1>
+                        <h1>Планировщик задач</h1>
                         <input
                             type = 'text'
-                            value = { state.get('searchTaskName') }
+                            value = { state.get("searchTaskName") }
                             onChange = { this.changeSearchNamePart }
                         />
                     </header>
@@ -146,18 +170,20 @@ export default class Scheduler extends Component {
                             <input
                                 placeholder = 'Описание моей новой задачи'
                                 type = 'text'
-                                value = { state.get('newTaskName') }
+                                value = { state.get("newTaskName") }
                                 onChange = { this.changeNewTaskName }
                             />
-                            <button onClick = { this.createToDo }>Добавить задачу</button>
+                            <button onClick = { this.createToDo }>
+                                Добавить задачу
+                            </button>
                         </form>
                         <div>
                             <ul>
                                 <div>
                                     <FlipMove>
-                                        { filteredFavoriteTasks }
-                                        { filteredUsualTasks }
-                                        { filteredCompletedTasks }
+                                        {filteredFavoriteTasks}
+                                        {filteredUsualTasks}
+                                        {filteredCompletedTasks}
                                     </FlipMove>
                                 </div>
                             </ul>
@@ -165,16 +191,18 @@ export default class Scheduler extends Component {
                     </section>
                     <footer>
                         <Checkbox
-                            checked = { state.get('isAllCompleted') }
-                            color1 = { 'var(--paletteColor5)' }
-                            color2 = { 'var(--paletteColor2)' }
+                            checked = { state.get("isAllCompleted") }
+                            color1 = { "var(--paletteColor5)" }
+                            color2 = { "var(--paletteColor2)" }
                             onClick = { this._makeAllTasksCompleted }
                         />
-                        <span className = { Styles.completeAllTasks }>Все задачи выполнены</span>
+                        <span className = { Styles.completeAllTasks }>
+                            Все задачи выполнены
+                        </span>
                     </footer>
                 </main>
                 <div>
-                    <Spinner spin = { this.props.state.get('isSpinning') } />
+                    <Spinner spin = { this.props.state.get("isSpinning") } />
                 </div>
             </section>
         );

@@ -1,4 +1,4 @@
-import { asyncTypes } from './asyncTypes';
+import { asyncTypes } from "./asyncTypes";
 
 export const tasksActionsAsync = Object.freeze({
     createTaskAsync: (taskName) => ({
@@ -8,7 +8,10 @@ export const tasksActionsAsync = Object.freeze({
     updateTaskAsync: (taskID, newTaskName, completed, favorite) => ({
         type:    asyncTypes.UPDATE_TASK_ASYNC,
         payload: {
-            taskID, newTaskName, completed, favorite,
+            taskID,
+            newTaskName,
+            completed,
+            favorite,
         },
     }),
     deleteTaskAsync: (taskID) => ({

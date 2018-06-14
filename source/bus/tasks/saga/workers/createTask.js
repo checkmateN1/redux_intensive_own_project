@@ -1,7 +1,7 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put } from "redux-saga/effects";
 
 //Instruments
-import { api, token } from 'config/api';
+import { api, token } from "config/api";
 import { tasksActions } from "bus/tasks/actions";
 import { stateActions } from "bus/state/actions";
 
@@ -14,7 +14,7 @@ export function* callCreateTaskWorker ({ payload: taskName }) {
             method:  "POST",
             headers: {
                 Authorization:  token,
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({ message: taskName }),
         });
@@ -31,5 +31,4 @@ export function* callCreateTaskWorker ({ payload: taskName }) {
     } finally {
         yield put(stateActions.isSpinning(false));
     }
-
 }

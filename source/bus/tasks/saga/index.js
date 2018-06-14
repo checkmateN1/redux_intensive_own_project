@@ -1,8 +1,8 @@
 //Core
-import { takeEvery } from 'redux-saga/effects';
+import { takeEvery } from "redux-saga/effects";
 
 //Instruments
-import { asyncTypes } from './asyncTypes';
+import { asyncTypes } from "./asyncTypes";
 import { callCreateTaskWorker } from "./workers/createTask";
 import { callDeleteTaskWorker } from "./workers/deleteTask";
 import { callUpdateTaskWorker } from "./workers/updateTask";

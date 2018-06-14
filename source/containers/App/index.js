@@ -1,11 +1,10 @@
 // Core
-import React, { Component } from 'react';
-import { hot } from 'react-hot-loader';
-import { Provider } from 'react-redux';
-
+import React, { Component } from "react";
+import { hot } from "react-hot-loader";
+import { Provider } from "react-redux";
 
 //Instruments
-import { store } from 'init/store';
+import { store } from "init/store";
 
 //Components
 import Scheduler from "components/Scheduler";

@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 //Instruments
@@ -15,14 +15,13 @@ import Checkbox from "../../theme/assets/Checkbox";
 import Remove from "../../theme/assets/Remove";
 import Star from "../../theme/assets/Star";
 
-
 const mapState = (state) => {
     return {
         state: state.state,
     };
 };
 
-const mapDispatch  = (dispatch) => {
+const mapDispatch = (dispatch) => {
     return {
         actions: bindActionCreators(
             {
@@ -34,7 +33,7 @@ const mapDispatch  = (dispatch) => {
                 editTaskName:    stateActions.editTaskName,
                 editorID:        stateActions.editorID,
             },
-            dispatch,
+            dispatch
         ),
     };
 };
@@ -45,14 +44,14 @@ export default class Task extends Component {
         this.taskInput.focus();
         const val = this.taskInput.value;
 
-        this.taskInput.value = '';
+        this.taskInput.value = "";
         this.taskInput.value = val;
     }
 
     _changeEditState = () => {
-        if (this.props.state.get('editorID')) {
-            this.props.actions.editTaskName('');
-            this.props.actions.editorID('');
+        if (this.props.state.get("editorID")) {
+            this.props.actions.editTaskName("");
+            this.props.actions.editorID("");
 
             return false;
         }
@@ -69,17 +68,25 @@ export default class Task extends Component {
         const eventKey = event.key;
         const { taskName, taskID, isCompleted, isFavorite } = this.props;
 
-        if (eventKey === "Enter" && this.props.state.get('editTaskName') !== taskName) {
-            this.props.actions.updateTaskAsync(taskID, this.props.state.get('editTaskName'), isCompleted, isFavorite);
+        if (
+            eventKey === "Enter" &&
+            this.props.state.get("editTaskName") !== taskName
+        ) {
+            this.props.actions.updateTaskAsync(
+                taskID,
+                this.props.state.get("editTaskName"),
+                isCompleted,
+                isFavorite
+            );
 
-            this.props.actions.editTaskName('');
-            this.props.actions.editorID('');
+            this.props.actions.editTaskName("");
+            this.props.actions.editorID("");
 
             return false;
         }
         if (eventKey === "Escape") {
-            this.props.actions.editTaskName('');
-            this.props.actions.editorID('');
+            this.props.actions.editTaskName("");
+            this.props.actions.editorID("");
 
             return false;
         }
@@ -88,7 +95,7 @@ export default class Task extends Component {
     _changeNewName = (event) => {
         const value = event.target.value;
 
-        if (value.split('').length > 50) {
+        if (value.split("").length > 50) {
             return false;
         }
 
@@ -98,20 +105,27 @@ export default class Task extends Component {
     _changeCompleted = () => {
         const { taskName, taskID, isCompleted, isFavorite } = this.props;
 
-        this.props.actions.updateTaskAsync(taskID, taskName, !isCompleted, isFavorite);
+        this.props.actions.updateTaskAsync(
+            taskID,
+            taskName,
+            !isCompleted,
+            isFavorite
+        );
     };
 
     _changeFavorite = () => {
         const { taskName, taskID, isCompleted, isFavorite } = this.props;
 
-        this.props.actions.updateTaskAsync(taskID, taskName, isCompleted, !isFavorite);
+        this.props.actions.updateTaskAsync(
+            taskID,
+            taskName,
+            isCompleted,
+            !isFavorite
+        );
     };
 
     render () {
-        const {
-            isFavorite,
-            isCompleted,
-        } = this.props;
+        const { isFavorite, isCompleted } = this.props;
 
         return (
             <li className = { Styles.task }>
@@ -119,16 +133,26 @@ export default class Task extends Component {
                     <div className = { Styles.complete }>
                         <Checkbox
                             checked = { isCompleted }
-                            color1 = { 'var(--paletteColor3)' }
-                            color2 = { 'var(--paletteColor2)' }
+                            color1 = { "var(--paletteColor3)" }
+                            color2 = { "var(--paletteColor2)" }
                             onClick = { this._changeCompleted }
                         />
                     </div>
                     <input
-                        disabled = { this.props.state.get('editorID') !== this.props.taskID }
-                        ref = { (input) => { this.taskInput = input; } }
-                        type = { 'text' }
-                        value = { this.props.state.get('editorID') === this.props.taskID ? this.props.state.get('editTaskName') : this.props.taskName }
+                        disabled = {
+                            this.props.state.get("editorID") !==
+                            this.props.taskID
+                        }
+                        ref = { (input) => {
+                            this.taskInput = input;
+                        } }
+                        type = { "text" }
+                        value = {
+                            this.props.state.get("editorID") ===
+                            this.props.taskID
+                                ? this.props.state.get("editTaskName")
+                                : this.props.taskName
+                        }
                         onChange = { this._changeNewName }
                         onKeyDown = { this._updateTask }
                     />
@@ -137,12 +161,15 @@ export default class Task extends Component {
                     <div className = { Styles.setPriority }>
                         <Star
                             checked = { isFavorite }
-                            color1 = { 'var(--paletteColor3)' }
+                            color1 = { "var(--paletteColor3)" }
                             onClick = { this._changeFavorite }
                         />
                     </div>
                     <div className = { Styles.edit }>
-                        <Edit color1 = { 'var(--paletteColor3)' } onClick = { this._changeEditState } />
+                        <Edit
+                            color1 = { "var(--paletteColor3)" }
+                            onClick = { this._changeEditState }
+                        />
                     </div>
                     <Remove onClick = { this._removeTask } />
                 </div>

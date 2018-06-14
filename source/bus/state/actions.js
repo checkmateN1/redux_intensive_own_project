@@ -1,4 +1,4 @@
-import { types } from './types';
+import { types } from "./types";
 
 export const stateActions = Object.freeze({
     searchTaskName: (taskName) => ({
