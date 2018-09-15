@@ -46,9 +46,10 @@ export default class Scheduler extends Component {
     constructor () {
         super();
 
-        this.createToDo = ::this._createToDo; //completed
-        this.changeSearchNamePart = ::this._changeSearchNamePart; //completed
-        this.changeNewTaskName = ::this._changeNewTaskName; //completed
+        this.createToDo = ::this._createToDo;
+        this.changeSearchNamePart = ::this._changeSearchNamePart;
+        this.changeNewTaskName = ::this._changeNewTaskName;
+        this.filterTasks =::this._filterTasks;
     }
 
     _changeSearchNamePart = (event) => {
@@ -125,6 +126,12 @@ export default class Scheduler extends Component {
         }
 
         return true;
+    };
+
+    componentDidMount() {
+        this.props.actions.createTaskAsync('Пройти собеседование');
+        this.props.actions.createTaskAsync('Дочитать секреты JavaScript ниндзя');
+        this.props.actions.createTaskAsync('Накормить кота');
     };
 
     render () {

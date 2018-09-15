@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`store: should have a valid state shape 1`] = `
+Object {
+  "notifications": Immutable.List [],
+  "state": Immutable.Map {
+    "searchTaskName": "",
+    "newTaskName": "",
+    "editTaskName": "",
+    "editorID": "",
+    "isAllCompleted": false,
+    "isSpinning": false,
+  },
+  "tasks": Immutable.List [],
+}
+`;
